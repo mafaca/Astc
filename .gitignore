@@ -1,0 +1,9 @@
+**/.vs/
+**/*.csproj.user
+!SmolvTest/SmolvTest.csproj.user
+packages/
+**/packages.config
+
+Bins/
+
+*.DotSettings.user
