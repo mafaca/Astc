@@ -1,5 +1,6 @@
 using Astc;
 using System;
+using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
 
@@ -22,21 +23,30 @@ namespace AstcTest
 				int blockYSize = int.Parse(args[4]);
 				byte[] data = File.ReadAllBytes(path);
 
+				Stopwatch stopwatch = new Stopwatch();
 				using (DirectBitmap bitmap = new DirectBitmap(width, height))
 				{
-					AstcDecoder decoder = new AstcDecoder();
-					decoder.DecodeASTC(data, width, height, blockXSize, blockYSize, bitmap.Bits);
+					ConsoleKeyInfo key;
+					do
+					{
+						stopwatch.Start();
+						AstcDecoder.DecodeASTC(data, width, height, blockXSize, blockYSize, bitmap.Bits);
+						stopwatch.Stop();
+						Console.WriteLine("Finished! " + stopwatch.ElapsedMilliseconds);
+						stopwatch.Reset();
+						key = Console.ReadKey();
+					}
+					while (key.Key == ConsoleKey.Spacebar);
+
 
 					string dirPath = Path.GetDirectoryName(path);
 					string name = Path.GetFileNameWithoutExtension(path);
 					string newPath = Path.Combine(dirPath, name + "_decoded.png");
-					bitmap.Bitmap.Save(newPath, ImageFormat.Png);
+					//bitmap.Bitmap.Save(newPath, ImageFormat.Png);
 				}
 
-				Console.WriteLine("Finished");
 			}
 
-			Console.ReadKey();
 		}
 	}
 }
