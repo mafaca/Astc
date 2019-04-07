@@ -12,6 +12,7 @@
     <DefineConstants>DEBUG;TRACE;NET_STANDARD</DefineConstants>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <OutputPath>..\Bins\CP\$(Configuration)\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
