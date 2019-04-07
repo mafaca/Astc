@@ -43,7 +43,7 @@ namespace AstcTest
 					string dirPath = Path.GetDirectoryName(path);
 					string name = Path.GetFileNameWithoutExtension(path);
 					string newPath = Path.Combine(dirPath, name + "_decoded.png");
-					//bitmap.Bitmap.Save(newPath, ImageFormat.Png);
+					bitmap.Bitmap.Save(newPath, ImageFormat.Png);
 				}
 
 				Console.WriteLine("Finished!");

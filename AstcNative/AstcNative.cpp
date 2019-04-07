@@ -38,22 +38,38 @@ static void WriteFile(const char* fileName, ByteArray& output)
 	}
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-	const int Width = 512;
-	const int Height = 512;
-	const int BlockSize = 5;
+	if (argc < 6)
+	{
+		std::cout << "Format: {fileName} {width} {height} {block_x_size} {block_y_size}" << std::endl;
+		std::cin.get();
+		return 0;
+	}
 
 	ByteArray input;
-	ReadFile(std::string("test.astc").c_str(), input);
+	char appDirectory[256];
+	_splitpath(argv[0], nullptr, appDirectory, nullptr, nullptr);
+	char* filePath = argv[1];
+	char fileDirectory[256];
+	char fileName[256];
+	_splitpath(filePath, nullptr, fileDirectory, fileName, nullptr);
+	int width = std::stoi(argv[2]);
+	int height = std::stoi(argv[3]);
+	int blockXSize = std::stoi(argv[4]);
+	int blockYSize = std::stoi(argv[5]);
+	std::string appDirStr = std::string(appDirectory);
+	std::string inPath = fileDirectory[0] == 0 ? appDirStr + filePath : filePath;
+	ReadFile(inPath.c_str(), input);
 
 	ByteArray output;
-	output.resize(Width * Height * 4);
+	output.resize(width * height * 4);
 	auto start = std::chrono::high_resolution_clock::now();
-	decode_astc(input.data(), Width, Height, BlockSize, BlockSize, (uint32_t*)output.data());
+	decode_astc(input.data(), width, height, blockXSize, blockYSize, (uint32_t*)output.data());
 	auto finish = std::chrono::high_resolution_clock::now();
 	auto microseconds = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
 	std::cout << microseconds.count() << "ms\n";
 
-	WriteFile("test.data", output);
+	std::string outPath = appDirStr + fileName + ".data";
+	WriteFile(outPath.c_str(), output);
 }
