@@ -13,6 +13,7 @@ namespace AstcTest
 			if (args.Length < 4)
 			{
 				Console.WriteLine("Format: {path} {width} {height} {blockXSize} {blockYSize}");
+				Console.ReadKey();
 			}
 			else
 			{
@@ -32,7 +33,7 @@ namespace AstcTest
 						stopwatch.Start();
 						AstcDecoder.DecodeASTC(data, width, height, blockXSize, blockYSize, bitmap.Bits);
 						stopwatch.Stop();
-						Console.WriteLine("Finished! " + stopwatch.ElapsedMilliseconds);
+						Console.WriteLine("Processed " + stopwatch.ElapsedMilliseconds);
 						stopwatch.Reset();
 						key = Console.ReadKey();
 					}
@@ -45,6 +46,7 @@ namespace AstcTest
 					//bitmap.Bitmap.Save(newPath, ImageFormat.Png);
 				}
 
+				Console.WriteLine("Finished!");
 			}
 
 		}

@@ -83,14 +83,15 @@ namespace Astc
 				BlockData blockData = new BlockData();
 				blockData.bw = blockWidth;
 				blockData.bh = blockHeight;
-				DecodeBlockParameters(input, &blockData);
-				DecodeEndpoints(input, &blockData);
-				DecodeWeights(input, &blockData);
+				BlockData* blockPtr = &blockData;
+				DecodeBlockParameters(input, blockPtr);
+				DecodeEndpoints(input, blockPtr);
+				DecodeWeights(input, blockPtr);
 				if (blockData.part_num > 1)
 				{
-					SelectPartition(input, &blockData);
+					SelectPartition(input, blockPtr);
 				}
-				ApplicateColor(&blockData, output);
+				ApplicateColor(blockPtr, output);
 			}
 		}
 
