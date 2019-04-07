@@ -1,6 +1,6 @@
 **/.vs/
-**/*.csproj.user
-!AstcTest.csproj.user
+**/*.*.user
+!AstcTest/AstcTest.csproj.user
 packages/
 **/packages.config
 
